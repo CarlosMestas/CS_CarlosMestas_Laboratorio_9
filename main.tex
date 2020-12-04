@@ -1,0 +1,437 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[top = 2cm, bottom = 2cm, left = 2cm, right = 2cm]{geometry} 
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{multirow}
+\usepackage{booktabs} 
+\usepackage{graphicx} 
+\usepackage{setspace}
+\setlength{\parindent}{0in}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{tikz-timing}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage[thinlines]{easytable}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{hyperref} % Support for hyperlinks
+\usepackage{xcolor}
+
+\definecolor{LightGray}{gray}{0.95}
+
+\definecolor{mGreen}{rgb}{0,0.4,0}
+
+\lstset{
+    frame=tblr, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{mGreen}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{red} % string color
+}
+
+
+\tikzset{
+timing/z/.style={color=red},
+timing/l/.style={color=red},
+timing/h/.style={color=red},
+timing/slope=0,
+timing/name/.append style={yshift=1.5mm}
+}
+
+\pagestyle{fancy} 
+\lhead{\footnotesize Construcción de Software: Laboratorio 8}
+
+\rhead{\footnotesize 30 de noviembre del 2020}
+
+\cfoot{\footnotesize \thepage} 
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{tabular}{p{15.5cm}} 
+\large Universidad Nacional de San Agustín \\ 
+\large Facultad de Ingeniería de Producción y Servicios \\
+\large Escuela Profesional de Ingeniería de Sistemas \\
+{\LARGE \bf Construcción de Software} \\
+\vspace{1mm}
+Alumno: Mestas Escarcena, Carlos Alberto \\
+Grupo: B \\
+\hline \\
+\end{tabular} 
+
+\begin{center} 
+	{\LARGE \bf Laboratorio 9 - UML aplicado}
+	\vspace{2mm}
+\end{center}  
+
+\section*{Ejercicio 1}
+
+\begin{itemize}
+    \item 11. El 16 de noviembre Francisco Sagasti es elegido como presidente del congreso de la República del Perú.
+    \item 12. El 17 de noviembre juramenta como presidente constitucional del Perú. La ONU felicita a Francisco Sagasti como presidente del Perú.
+    \item 13. El 18 de noviembre distintos congresistas se pronuncian sobre el fallecimiento de los jóvenes en las protestas
+\end{itemize}
+
+\section*{Ejercicio 2}
+
+
+
+\clearpage
+\newpage
+
+El código utilizado para generar el diagrama fue:
+
+\begin{lstlisting}
+@startuml
+
+
+node "Servidor de Aplicaciones" as sa{
+    component "Capa de\nnegocio" as c01
+    component "Capa de\nacceso a\ndatos" as c02
+}
+
+database "Base de Datos" as bd{
+    component "SQL Server" as sql01
+}
+
+node "router"
+
+node "PC secretaria" as pc1 {
+    component "Capa de\npresentacion" as c03
+}
+
+node "PC doctor" as pc2 {
+    component "Capa de\npresentacion" as c04
+}
+
+node "PC asistente" as pc3 {
+    component "Capa de\npresentacion" as c05
+}
+
+node "HP Laserjet Pro M402dn" as hp
+
+router -- pc1 : LAN
+router -- pc2 : LAN
+router -- pc3 : LAN
+
+router -left- hp : LAN
+
+sa -- bd
+
+pc1 -- sa
+pc2 -- sa
+pc3 -- sa
+
+@enduml
+\end{lstlisting}
+
+\begin{figure}[ht]
+        \centering        
+        \includegraphics[width=1\textwidth]{images/cs01.png}
+        \caption{Diagrama de despliegue - Ejercicio 1.}  
+        {{\footnotesize Realizado en: PlantText UML Editor }}
+\end{figure}
+
+\section*{Ejercicio 2}
+
+El código utilizado para generar el diagrama fue:
+
+\begin{lstlisting}
+@startuml
+
+node "Servidor Web" as sw
+
+node "Servidor de Información" as si {
+    component "Interfaces" as i1
+    component "Habitaciones" as h1
+}
+
+node "Clientes" as c
+
+node "PC recepcionista" as pc0
+
+node "Servidor Espejo" as se {
+    component "Interfaces" as i2
+    component "Habitaciones" as h2
+}
+
+node "Router" as r
+
+node "PC 1" as pc1
+
+node "PC 2" as pc2
+
+node "PC 3" as pc3
+
+node "PC 4" as pc4
+
+node "PC 5" as pc5
+
+node "Impresora" as i
+
+r -- i      : LAN
+r -- pc1    : LAN
+r -- pc2    : LAN
+r -- pc3    : LAN
+r -- pc4    : LAN
+r -- pc5    : LAN
+
+se "1" -- "1" si
+
+si -- pc0
+
+pc0 -- r : LAN
+
+sw -right- si
+
+c -- sw : TCP / IP
+
+@enduml
+\end{lstlisting}
+
+\clearpage
+\newpage
+
+\begin{figure}[ht]
+        \centering        
+        \includegraphics[width=1\textwidth]{images/cs02.png}
+        \caption{Diagrama de despliegue - Ejercicio 2.}  
+        {{\footnotesize Realizado en: PlantText UML Editor }}
+\end{figure}
+
+\section*{Ejercicio 3}
+
+El código utilizado para generar el diagrama fue:
+
+\begin{lstlisting}
+@startuml
+
+
+node "Router" as r
+
+node "PC 1" as pc1{
+    component "Pago efectivo" as p1
+    component "Ventas" as v1
+}
+
+node "PC 2" as pc2 {
+    component "Pago POS Visa" as p2
+    component "Ventas" as v2
+}
+
+node "PC 3" as pc3{
+    component "Pago POS Mastercard" as p3
+    component "Ventas" as v3
+}
+
+node "Almacen" as alm {
+    node "PC 4" as pc4{
+        component "Inventario" as p4
+    }
+}
+
+node "Servidor de aplicaciones" as ser 
+
+database "Base de Datos" as bd{
+    component "SQL Server" as sql01
+}
+
+node "Impresora" as i
+
+r -up- pc1    : LAN
+r -up- pc2    : LAN
+r -up- pc3    : LAN
+r -- i      : LAN
+
+ser -left- bd
+
+r -- ser
+ser -- pc4
+
+@enduml
+\end{lstlisting}
+
+\clearpage
+\newpage
+
+\begin{figure}[ht]
+        \centering        
+        \includegraphics[width=1\textwidth]{images/cs03.png}
+        \caption{Diagrama de despliegue - Ejercicio 3.}  
+        {{\footnotesize Realizado en: PlantText UML Editor }}
+\end{figure}
+
+\section*{Ejercicio 4}
+
+El código utilizado para generar el diagrama fue:
+
+\begin{lstlisting}
+@startuml
+
+node "Router" as r
+
+node "PC 1" as pc1{
+    component "Pago efectivo" as p1
+    component "Ventas" as v1
+}
+
+node "PC 2" as pc2 {
+    component "Pago POS Visa" as p2
+    component "Ventas" as v2
+}
+
+node "PC 3" as pc3{
+    component "Pago POS Mastercard" as p3
+    component "Ventas" as v3
+}
+
+node "Almacen" as alm {
+    node "PC 4" as pc4{
+        component "Inventario" as inv
+        component "Despacho" as des
+    }
+}
+
+node "Servidor de aplicaciones" as ser {
+    
+    component "Ingreso" as ing
+    component "Menu" as menu
+    component "Catalogos" as cat
+}
+
+node "Servidor web" as sw {
+    component "Aplicacion" as app
+    component "Apache Tomcat" as at
+    component "Utilidades" as u
+}
+
+database "Base de Datos" as bd{
+    component "SQL Server" as sql01
+}
+
+node "Impresora" as i
+
+r -up- pc1    : LAN
+r -up- pc2    : LAN
+r -up- pc3    : LAN
+r -- i      : LAN
+
+ser -left- bd
+
+r -- ser
+ser -- pc4
+ser -- sw
+
+v1 ..> ing
+v2 ..> ing
+v3 ..> ing
+
+menu ..> ing
+cat ..> ing
+
+des ..> ing
+inv --> ing
+
+@enduml
+\end{lstlisting}
+
+\clearpage
+\newpage
+
+\begin{figure}[ht]
+        \centering        
+        \includegraphics[width=1\textwidth]{images/cs04.png}
+        \caption{Diagrama de despliegue - Ejercicio 4.}  
+        {{\footnotesize Realizado en: PlantText UML Editor }}
+\end{figure}
+
+\section*{Ejercicio 5}
+
+Para el diagrama del ejercicio he planteado las siguientes consideraciones:
+
+\begin{itemize}
+    \item Diseñar el diagrama de despliegue de una agencia de turismo de la plaza de armas de la ciudad de Arequipa.
+    \item Se tienen dos computadoras y una impresora conectadas a una red local.
+    \item Se tiene un servidor de aplicaciones al cuál podrán ingresar desde estas computadoras, para el uso de las aplicaciones del menú, ventas y catálogos se requiere un previo ingreso al sistema.
+    \item Se tiene también una impresora en la red local para poder imprimir diferentes tickets.
+    \item Se tiene también un servidor web desde el cuál los turistas podrán obtener información de la agencia y que ofrece.
+    
+\end{itemize}
+
+\clearpage
+\newpage
+
+El código utilizado para generar el diagrama fue:
+
+\begin{lstlisting}
+@startuml
+
+node "Router" as r
+
+node "PC 1" as pc1{
+
+}
+
+node "PC 2" as pc2{
+
+}
+
+
+node "Servidor de aplicaciones" as ser {
+    component "Ingreso" as ing
+    component "Menu" as menu
+    component "Catalogos" as cat
+    component "Ventas" as ven
+}
+
+node "Servidor web" as sw {
+    component "Aplicacion" as app
+    component "Apache Tomcat" as at
+    component "Utilidades" as u
+}
+
+database "Base de Datos" as bd{
+    component "SQL Server" as sql01
+}
+
+node "Impresora" as i
+
+pc1 -- r : LAN
+pc2 -- r : LAN
+i -- r : LAN
+
+ser -- r
+sw -- ser
+bd -- ser
+
+menu ..> ing
+cat ..> ing
+ven ..> ing
+
+
+@enduml
+\end{lstlisting}
+
+\begin{figure}[ht]
+        \centering        
+        \includegraphics[width=1\textwidth]{images/cs05.png}
+        \caption{Diagrama de despliegue - Ejercicio 5.}  
+        {{\footnotesize Realizado en: PlantText UML Editor }}
+\end{figure}
+
+\clearpage
+\newpage
+
+
+
+
+
+    
+\end{document}
