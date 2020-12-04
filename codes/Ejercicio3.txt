@@ -1,0 +1,75 @@
+@startuml
+
+title "UML Aplicado - Diagrama de secuencia"
+
+actor "Congreso" as a3
+actor "Vizcarra" as a1
+actor "Abogado" as a2
+actor "Diario el Peruano" as a4
+
+
+activate a3
+
+a3 ->> a3 : 1. Se da el pedido de vacancia
+
+alt Firmas de congresistas > 26
+
+a3 ->> a3 : 2. Se brindan fundamentos
+
+
+a3 ->> a1 : 3. Se emite una copia
+
+
+activate a1
+deactivate a1
+
+    alt Admision del pedido de vacancia > 52 votos
+    
+        a3 ->> a3 : 4. Se acuerda el dia y hora para el debate y el pedido de vacancia
+    
+        a3 ->> a1 : 5. Se le informa
+        activate a1
+        deactivate a1
+      
+    end
+
+    a3 ->> a3: 6. Comienza el debate
+    
+    a3 ->> a1: 7. Se le permite su defensa
+    activate a1
+    
+    alt Cuenta con abogado
+    
+        a1 ->> a1: 8. Ejerce su defensa
+    
+    else No cuenta con abogado
+    
+        a1 ->> a2: 9. Le da pase a su abogado
+        deactivate a1
+        activate a2
+
+        
+        a2 ->> a2: 10. Expone la defensa
+        deactivate a2
+    end
+    
+    
+    a3 ->> a3 : 11. Comienza la votacion
+    
+    alt Votos > 87
+    
+        a3 ->> a3 : 12. Se aprueba la vacancia
+        
+        a3 ->> a4 : 13. Informa
+        activate a4
+        
+        a4 ->> a4 : 14. Realiza la publicación
+        deactivate a4
+        
+    else 
+    
+        a3 ->> a3 : 15. Se rechaza la vacancia
+        
+    end
+    
+end

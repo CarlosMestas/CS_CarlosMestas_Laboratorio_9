@@ -1,0 +1,24 @@
+@startuml
+
+title "UML Aplicado - Diagrama de estados"
+
+[*] --> AnuncioDeElecciones
+
+AnuncioDeElecciones --> AnuncioCandidatos
+
+AnuncioCandidatos --> Informacion : Busca
+
+Informacion: do / Se informa sobre candidatos antecedentes penales
+Informacion: do / Se informa sobre candidatos experiencia
+Informacion: do / Se informa sobre candidatos educación
+
+Informacion --> Votacion : Espera el tiempo para las elecciones
+Votacion: do / Se aproxima al lugar de votacion
+Votacion: do / Presenta su DNI en la entrada
+Votacion: do / Presenta su DNI al presidente de mesa
+Votacion: do / Realiza un voto responsable
+Votacion: do / Se retira del lugar de votacion
+
+Votacion --> [*]
+
+@enduml
