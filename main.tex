@@ -20,6 +20,7 @@
 \usepackage{listings}
 \usepackage{hyperref} % Support for hyperlinks
 \usepackage{xcolor}
+\usepackage{pdflscape}
 
 \definecolor{LightGray}{gray}{0.95}
 
@@ -32,7 +33,9 @@
     numbers=left, % display line numbers on the left
     commentstyle=\color{mGreen}, % comment color
     keywordstyle=\color{blue}, % keyword color
-    stringstyle=\color{red} % string color
+    stringstyle=\color{red}, % string color
+    linenos=true,
+    breaklines
 }
 
 
@@ -45,9 +48,9 @@ timing/name/.append style={yshift=1.5mm}
 }
 
 \pagestyle{fancy} 
-\lhead{\footnotesize Construcción de Software: Laboratorio 8}
+\lhead{\footnotesize Construcción de Software: Laboratorio 9}
 
-\rhead{\footnotesize 30 de noviembre del 2020}
+\rhead{\footnotesize 04 de diciembre del 2020}
 
 \cfoot{\footnotesize \thepage} 
 
@@ -71,6 +74,13 @@ Grupo: B \\
 	\vspace{2mm}
 \end{center}  
 
+En desarrollo de los diferentes diagramas se realizó con  \textcolor{blue}{
+    \href{https://www.planttext.com/}{PlantText UML Editor}}.
+\\
+\\
+En desarrollo del informe se encuentra en \textcolor{blue}{
+    \href{https://github.com/CarlosMestas/CS_CarlosMestas_Laboratorio_9}{GitHub}}.
+
 \section*{Ejercicio 1}
 
 \begin{itemize}
@@ -81,130 +91,87 @@ Grupo: B \\
 
 \section*{Ejercicio 2}
 
-
-
-\clearpage
-\newpage
-
 El código utilizado para generar el diagrama fue:
 
 \begin{lstlisting}
 @startuml
 
+title UML Aplicado - Diagrama de Casos de Uso 
 
-node "Servidor de Aplicaciones" as sa{
-    component "Capa de\nnegocio" as c01
-    component "Capa de\nacceso a\ndatos" as c02
-}
+(Elecciones) as z1
+(Derecho a protestar) as z2
+(Protección) as z3
 
-database "Base de Datos" as bd{
-    component "SQL Server" as sql01
-}
 
-node "router"
+actor :Ciudadano: as ciu
+actor :Poder Legislativo: as podleg
+actor :Poder Judicial: as podjud
+actor :Poder Ejecutivo: as podeje
+actor :Fuerzas Armadas: as fuearm
 
-node "PC secretaria" as pc1 {
-    component "Capa de\npresentacion" as c03
-}
+(Promulgar leyes) as a1
+(Ejercer el\nderecho de\namnistía) as a2
+(Autorizar viajes\nal Presidente\nfuera del país) as a3
 
-node "PC doctor" as pc2 {
-    component "Capa de\npresentacion" as c04
-}
+podleg --> a1
+podleg --> a2
+podleg --> a3
 
-node "PC asistente" as pc3 {
-    component "Capa de\npresentacion" as c05
-}
+(Cumplir y hacer\ncumplir la\nconstitución) as b1
+(Velar por el\norden interno\ny la seguridad\nexterior de la\nRepublica) as b2
+(Convocar a elecciones) as b3
+(Decretar\nestado de emergencia) as b4
+(Disolver\nel congreso) as b5
+(Designa ministros) as b6
+(Pedido de confianza) as b7
 
-node "HP Laserjet Pro M402dn" as hp
+podeje --> b1
+podeje --> b2
+podeje --> b3
+podeje --> b4
+podeje --> b5
+podeje --> b6
 
-router -- pc1 : LAN
-router -- pc2 : LAN
-router -- pc3 : LAN
+b3 ..> ciu : include
+b4 ..> ciu : include
 
-router -left- hp : LAN
+b6 ..> b7 : include
 
-sa -- bd
+(Juzgar a quienes\ninclumpan las leyes) as c1
 
-pc1 -- sa
-pc2 -- sa
-pc3 -- sa
+podjud --> c1
 
-@enduml
-\end{lstlisting}
+c1 ..> ciu : include
 
-\begin{figure}[ht]
-        \centering        
-        \includegraphics[width=1\textwidth]{images/cs01.png}
-        \caption{Diagrama de despliegue - Ejercicio 1.}  
-        {{\footnotesize Realizado en: PlantText UML Editor }}
-\end{figure}
+ciu --> z1 : participa en
+ciu --> z2 
 
-\section*{Ejercicio 2}
+z1 ..> podeje : include
+z1 ..> podleg : include
 
-El código utilizado para generar el diagrama fue:
-
-\begin{lstlisting}
-@startuml
-
-node "Servidor Web" as sw
-
-node "Servidor de Información" as si {
-    component "Interfaces" as i1
-    component "Habitaciones" as h1
-}
-
-node "Clientes" as c
-
-node "PC recepcionista" as pc0
-
-node "Servidor Espejo" as se {
-    component "Interfaces" as i2
-    component "Habitaciones" as h2
-}
-
-node "Router" as r
-
-node "PC 1" as pc1
-
-node "PC 2" as pc2
-
-node "PC 3" as pc3
-
-node "PC 4" as pc4
-
-node "PC 5" as pc5
-
-node "Impresora" as i
-
-r -- i      : LAN
-r -- pc1    : LAN
-r -- pc2    : LAN
-r -- pc3    : LAN
-r -- pc4    : LAN
-r -- pc5    : LAN
-
-se "1" -- "1" si
-
-si -- pc0
-
-pc0 -- r : LAN
-
-sw -right- si
-
-c -- sw : TCP / IP
+fuearm --> z3
+z3 ..> ciu : include
 
 @enduml
 \end{lstlisting}
 
 \clearpage
 \newpage
+    
+    \begin{landscape}
+    
 
-\begin{figure}[ht]
+\begin{figure}[p]
         \centering        
-        \includegraphics[width=1\textwidth]{images/cs02.png}
-        \caption{Diagrama de despliegue - Ejercicio 2.}  
+        \includegraphics[width=1.5\textwidth]{images/umlA01.PNG}
+        \caption{Diagrama de casos de Uso - Ejercicio 2.}  
         {{\footnotesize Realizado en: PlantText UML Editor }}
 \end{figure}
+
+    \end{landscape}
+
+\clearpage
+\newpage
 
 \section*{Ejercicio 3}
 
@@ -213,60 +180,98 @@ El código utilizado para generar el diagrama fue:
 \begin{lstlisting}
 @startuml
 
+title "UML Aplicado - Diagrama de secuencia"
 
-node "Router" as r
+actor "Congreso" as a3
+actor "Vizcarra" as a1
+actor "Abogado" as a2
+actor "Diario el Peruano" as a4
 
-node "PC 1" as pc1{
-    component "Pago efectivo" as p1
-    component "Ventas" as v1
-}
 
-node "PC 2" as pc2 {
-    component "Pago POS Visa" as p2
-    component "Ventas" as v2
-}
+activate a3
 
-node "PC 3" as pc3{
-    component "Pago POS Mastercard" as p3
-    component "Ventas" as v3
-}
+a3 ->> a3 : 1. Se da el pedido de vacancia
 
-node "Almacen" as alm {
-    node "PC 4" as pc4{
-        component "Inventario" as p4
-    }
-}
+alt Firmas de congresistas > 26
 
-node "Servidor de aplicaciones" as ser 
+a3 ->> a3 : 2. Se brindan fundamentos
 
-database "Base de Datos" as bd{
-    component "SQL Server" as sql01
-}
 
-node "Impresora" as i
+a3 ->> a1 : 3. Se emite una copia
 
-r -up- pc1    : LAN
-r -up- pc2    : LAN
-r -up- pc3    : LAN
-r -- i      : LAN
 
-ser -left- bd
+activate a1
+deactivate a1
 
-r -- ser
-ser -- pc4
+    alt Admision del pedido de vacancia > 52 votos
+    
+        a3 ->> a3 : 4. Se acuerda el dia y hora para el debate y el pedido de vacancia
+    
+        a3 ->> a1 : 5. Se le informa
+        activate a1
+        deactivate a1
+      
+    end
 
-@enduml
+    a3 ->> a3: 6. Comienza el debate
+    
+    a3 ->> a1: 7. Se le permite su defensa
+    activate a1
+    
+    alt Cuenta con abogado
+    
+        a1 ->> a1: 8. Ejerce su defensa
+    
+    else No cuenta con abogado
+    
+        a1 ->> a2: 9. Le da pase a su abogado
+        deactivate a1
+        activate a2
+
+        
+        a2 ->> a2: 10. Expone la defensa
+        deactivate a2
+    end
+    
+    
+    a3 ->> a3 : 11. Comienza la votacion
+    
+    alt Votos > 87
+    
+        a3 ->> a3 : 12. Se aprueba la vacancia
+        
+        a3 ->> a4 : 13. Informa
+        activate a4
+        
+        a4 ->> a4 : 14. Realiza la publicación
+        deactivate a4
+        
+    else 
+    
+        a3 ->> a3 : 15. Se rechaza la vacancia
+        
+    end
+    
+end
 \end{lstlisting}
 
 \clearpage
 \newpage
+    
+ %   \begin{landscape}
+    
 
-\begin{figure}[ht]
+\begin{figure}[p]
         \centering        
-        \includegraphics[width=1\textwidth]{images/cs03.png}
-        \caption{Diagrama de despliegue - Ejercicio 3.}  
+        \includegraphics[width=1\textwidth]{images/umlA02.PNG}
+        \caption{Diagrama de secuencia - Ejercicio 3.}  
         {{\footnotesize Realizado en: PlantText UML Editor }}
 \end{figure}
+
+  %  \end{landscape}
+    
+\clearpage
+\newpage
 
 \section*{Ejercicio 4}
 
@@ -275,156 +280,106 @@ El código utilizado para generar el diagrama fue:
 \begin{lstlisting}
 @startuml
 
-node "Router" as r
+title "UML Aplicado - Diagrama de secuencia"
 
-node "PC 1" as pc1{
-    component "Pago efectivo" as p1
-    component "Ventas" as v1
-}
+actor "Congreso" as a3
+actor "Vizcarra" as a1
+actor "Abogado" as a2
+actor "Diario el Peruano" as a4
 
-node "PC 2" as pc2 {
-    component "Pago POS Visa" as p2
-    component "Ventas" as v2
-}
 
-node "PC 3" as pc3{
-    component "Pago POS Mastercard" as p3
-    component "Ventas" as v3
-}
+activate a3
 
-node "Almacen" as alm {
-    node "PC 4" as pc4{
-        component "Inventario" as inv
-        component "Despacho" as des
-    }
-}
+a3 ->> a3 : 1. Se da el pedido de vacancia
 
-node "Servidor de aplicaciones" as ser {
+alt Firmas de congresistas > 26
+
+a3 ->> a3 : 2. Se brindan fundamentos
+
+
+a3 ->> a1 : 3. Se emite una copia
+
+
+activate a1
+deactivate a1
+
+    alt Admision del pedido de vacancia > 52 votos
     
-    component "Ingreso" as ing
-    component "Menu" as menu
-    component "Catalogos" as cat
-}
+        a3 ->> a3 : 4. Se acuerda el dia y hora para el debate y el pedido de vacancia
+    
+        a3 ->> a1 : 5. Se le informa
+        activate a1
+        deactivate a1
+      
+    end
 
-node "Servidor web" as sw {
-    component "Aplicacion" as app
-    component "Apache Tomcat" as at
-    component "Utilidades" as u
-}
+    a3 ->> a3: 6. Comienza el debate
+    
+    a3 ->> a1: 7. Se le permite su defensa
+    activate a1
+    
+    alt Cuenta con abogado
+    
+        a1 ->> a1: 8. Ejerce su defensa
+    
+    else No cuenta con abogado
+    
+        a1 ->> a2: 9. Le da pase a su abogado
+        deactivate a1
+        activate a2
 
-database "Base de Datos" as bd{
-    component "SQL Server" as sql01
-}
-
-node "Impresora" as i
-
-r -up- pc1    : LAN
-r -up- pc2    : LAN
-r -up- pc3    : LAN
-r -- i      : LAN
-
-ser -left- bd
-
-r -- ser
-ser -- pc4
-ser -- sw
-
-v1 ..> ing
-v2 ..> ing
-v3 ..> ing
-
-menu ..> ing
-cat ..> ing
-
-des ..> ing
-inv --> ing
-
-@enduml
+        
+        a2 ->> a2: 10. Expone la defensa
+        deactivate a2
+    end
+    
+    
+    a3 ->> a3 : 11. Comienza la votacion
+    
+    alt Votos > 87
+    
+        a3 ->> a3 : 12. Se aprueba la vacancia
+        
+        a3 ->> a4 : 13. Informa
+        activate a4
+        
+        a4 ->> a4 : 14. Realiza la publicación
+        deactivate a4
+        
+    else 
+    
+        a3 ->> a3 : 15. Se rechaza la vacancia
+        
+    end
+    
+end
 \end{lstlisting}
 
+
+ %   \begin{landscape}
+    
 \clearpage
 \newpage
 
 \begin{figure}[ht]
         \centering        
-        \includegraphics[width=1\textwidth]{images/cs04.png}
-        \caption{Diagrama de despliegue - Ejercicio 4.}  
+        \includegraphics[width=0.5\textwidth]{images/umlA03.PNG}
+        \caption{Diagrama de estados - Ejercicio 4.}  
         {{\footnotesize Realizado en: PlantText UML Editor }}
 \end{figure}
 
-\section*{Ejercicio 5}
 
-Para el diagrama del ejercicio he planteado las siguientes consideraciones:
+\begin{thebibliography}{00}
 
-\begin{itemize}
-    \item Diseñar el diagrama de despliegue de una agencia de turismo de la plaza de armas de la ciudad de Arequipa.
-    \item Se tienen dos computadoras y una impresora conectadas a una red local.
-    \item Se tiene un servidor de aplicaciones al cuál podrán ingresar desde estas computadoras, para el uso de las aplicaciones del menú, ventas y catálogos se requiere un previo ingreso al sistema.
-    \item Se tiene también una impresora en la red local para poder imprimir diferentes tickets.
-    \item Se tiene también un servidor web desde el cuál los turistas podrán obtener información de la agencia y que ofrece.
-    
-\end{itemize}
+\bibitem{b0} Ec, R. (2019, October 1). \textit{¿Cuál es el procedimiento para la vacancia presidencial?} El Comercio Perú. https://elcomercio.pe/politica/congreso/cual-es-el-procedimiento-para-la-vacancia-presidencial-noticia/
+
+\end{thebibliography}
+
 
 \clearpage
 \newpage
 
-El código utilizado para generar el diagrama fue:
 
-\begin{lstlisting}
-@startuml
-
-node "Router" as r
-
-node "PC 1" as pc1{
-
-}
-
-node "PC 2" as pc2{
-
-}
-
-
-node "Servidor de aplicaciones" as ser {
-    component "Ingreso" as ing
-    component "Menu" as menu
-    component "Catalogos" as cat
-    component "Ventas" as ven
-}
-
-node "Servidor web" as sw {
-    component "Aplicacion" as app
-    component "Apache Tomcat" as at
-    component "Utilidades" as u
-}
-
-database "Base de Datos" as bd{
-    component "SQL Server" as sql01
-}
-
-node "Impresora" as i
-
-pc1 -- r : LAN
-pc2 -- r : LAN
-i -- r : LAN
-
-ser -- r
-sw -- ser
-bd -- ser
-
-menu ..> ing
-cat ..> ing
-ven ..> ing
-
-
-@enduml
-\end{lstlisting}
-
-\begin{figure}[ht]
-        \centering        
-        \includegraphics[width=1\textwidth]{images/cs05.png}
-        \caption{Diagrama de despliegue - Ejercicio 5.}  
-        {{\footnotesize Realizado en: PlantText UML Editor }}
-\end{figure}
 
 \clearpage
 \newpage

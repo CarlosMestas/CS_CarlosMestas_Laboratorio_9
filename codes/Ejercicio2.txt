@@ -1,0 +1,63 @@
+@startuml
+
+title UML Aplicado - Diagrama de Casos de Uso 
+
+(Elecciones) as z1
+(Derecho a protestar) as z2
+(Protección) as z3
+
+
+actor :Ciudadano: as ciu
+actor :Poder Legislativo: as podleg
+actor :Poder Judicial: as podjud
+actor :Poder Ejecutivo: as podeje
+actor :Fuerzas Armadas: as fuearm
+
+(Promulgar leyes) as a1
+(Ejercer el\nderecho de\namnistía) as a2
+(Autorizar viajes\nal Presidente\nfuera del país) as a3
+
+podleg --> a1
+podleg --> a2
+podleg --> a3
+
+(Cumplir y hacer\ncumplir la\nconstitución) as b1
+(Velar por el\norden interno\ny la seguridad\nexterior de la\nRepública) as b2
+(Convocar a elecciones) as b3
+(Decretar\nestado de emergencia) as b4
+(Disolver\nel congreso) as b5
+(Designa ministros) as b6
+(Pedido de confianza) as b7
+
+podeje --> b1
+podeje --> b2
+podeje --> b3
+podeje --> b4
+podeje --> b5
+podeje --> b6
+
+
+b3 ..> ciu : include
+b4 ..> ciu : include
+
+b6 ..> b7 : include
+
+
+(Juzgar a quienes\ninclumpan las leyes) as c1
+
+podjud --> c1
+
+
+c1 ..> ciu : include
+
+
+ciu --> z1 : participa en
+ciu --> z2 
+
+z1 ..> podeje : include
+z1 ..> podleg : include
+
+fuearm --> z3
+z3 ..> ciu : include
+
+@enduml
